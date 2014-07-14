@@ -1,0 +1,61 @@
+<!-- view mask markup [VM] -->
+<div class="login">
+    <table>
+        <tr>
+            <td colspan="2" class="title">
+            {{paramTitle}}
+            </td>
+        </tr>
+        <tr>
+            <td class="label-realms">
+                Realm:
+            </td>
+            <td class="field-realms">
+                <select ng-model="dataRealm" ng-options="realm as realm for realm in paramRealms">
+                </select>
+            </td>
+            <td>
+            </td>
+        </tr>
+        <tr>
+            <td class="label-username">
+                Username:
+            </td>
+            <td class="field-username">
+                <div class="hint-border" ng-class="stateUsername">
+                    <input type="text" name="username" ng-model="dataUsername" focus-input>
+                </div>
+                <div class="hint-txt" ng-class="stateUsername">
+                    {{stateUsernameHint}}
+                </div>
+            </td>
+            <td>
+            </td>
+        </tr>
+        <tr>
+            <td class="label-password">
+                Password:
+            </td>
+            <td class="field-password">
+                <div class="hint-border" ng-class="statePassword">
+                    <input type="password" name="password" ng-model="dataPassword" trigger-login>
+                </div>
+                <div class="hint-txt" ng-class="statePassword">
+                    {{statePasswordHint}}
+                </div>
+            </td>
+            <td class="hashcode">
+                <div ng-class="stateHashcodeCol">{{stateHashcodeTxt}}</div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td class="button-login">
+                <input type="submit" value="Login" ng-click="loginRequested()" ng-disabled="!stateLoginAllowed" ng-class="{'disabled' : !stateLoginAllowed, '' : stateLoginAllowed}">
+            </td>
+            <td>
+            </td>
+        </tr>
+    </table>
+</div>
