@@ -1,16 +1,17 @@
 'use strict';
 
-/* Services */
+/*  business service component [BS]  */
+demoApp.service('businessService', function () {
 
-demoApp.service('businessLogic', function () {
-
+    /*  determine realms  */
 	this.loadRealms = function (callback) {
 		/*  simulate a slow backend communication  */
         setTimeout(function () {
             callback([ "foo", "bar", "baz", "quux" ]);
-        }, 1.0 * 1000)
+        }, 1.0 * 1000);
 	};
 
+    /*  determine hashed password hashed color/text  */
 	this.hashPassword = function (password) {
         var djbhash = function (str) {
             var h = 5381;
@@ -19,10 +20,10 @@ demoApp.service('businessLogic', function () {
             }
             h = Math.abs(h % 0xffffffff);
             return h;
-        }
+        };
         var mkletter = function (i) {
             return String.fromCharCode("A".charCodeAt(0) + i);
-        }
+        };
         var result = { txt: "&nbsp;&nbsp;", col: 0 };
         if (password !== "") {
             var h = djbhash(password);

@@ -7,13 +7,13 @@ demoApp.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/demo");
     
     $stateProvider.state("demo", {
-        url          : "/demo",
+        url   : "/demo",
         views : {
-            // the main template will be placed here (relatively named)
             "": { 
                 templateUrl : "panel/app-ui-panel-mask.html",
                 controller  : "panelController"
             },
+            /*  define sub-components  */
             "login1@demo": { 
                 templateUrl : "login/app-ui-login-mask.html",
                 resolve: {  

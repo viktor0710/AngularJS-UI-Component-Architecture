@@ -1,16 +1,15 @@
 'use strict';
-demoApp.controller("loginController", function($scope, title, businessLogic) {
+/*  controller+model component [PC+PM+PL]  */
+demoApp.controller("loginController", function($scope, title, businessService) {
     
-    /*  feed model with title [PP]  */
-    $scope.paramTitle = title.value;
+    
+    /*  presentation model [PM]  */
+    $scope.paramTitle = "";
     $scope.paramRealms = [];
-
     $scope.commandReset="";
-
     $scope.dataRealm    = "";
     $scope.dataUsername = "";
     $scope.dataPassword = "";
-
     $scope.stateUsername = "";
     $scope.stateUsernameHint ="";
     $scope.statePassword="";
@@ -19,21 +18,17 @@ demoApp.controller("loginController", function($scope, title, businessLogic) {
     $scope.stateHashcodeTxt="";
     $scope.stateLoginAllowed="";
     $scope.stateLoginRequested="";
+    /*  event bind to presentation model click event [PA]  */
+    $scope.loginRequested = function () {
+        $scope.$emit("login",[$scope.dataRealm, $scope.dataUsername, $scope.dataPassword]);
+    };
 
-	/*  feed model with realms [PP]  */
-	$scope.loadRealms = function () {
-		businessLogic.loadRealms(function (realms) {
-			$scope.paramRealms = realms;
-			$scope.dataRealm = realms[0];
-			$scope.$apply();
-		});
-	}();
-
-	var determine_button_enabled = function () {
+    var determine_button_enabled = function () {
         $scope.stateLoginAllowed =     ($scope.stateUsername === "valid")
         							&& ($scope.statePassword === "valid");
     };
 
+    /*  presentation logic [PL]  */
 	$scope.$watch("dataUsername", function (newUsername) {
         if (newUsername === "") {
             $scope.stateUsername = "empty";
@@ -48,6 +43,7 @@ demoApp.controller("loginController", function($scope, title, businessLogic) {
         determine_button_enabled();
     });
 
+    /*  presentation logic [PL]  */
     $scope.$watch("dataPassword", function (newPassword) {
     	if (newPassword === "") {
             $scope.statePassword = "empty";
@@ -65,11 +61,19 @@ demoApp.controller("loginController", function($scope, title, businessLogic) {
         $scope.stateHashcodeCol = "c" + hash.col;
     });
    
-    $scope.loginRequested = function () {
-        $scope.$emit("login",[$scope.dataRealm, $scope.dataUsername, $scope.dataPassword]);
-    };
+    /*  feed model with title [PP]  */
+    $scope.paramTitle = title.value;
 
-    //subscribe on reset event
+    /*  feed model with realms [PP]  */
+    $scope.loadRealms = function () {
+        businessLogic.loadRealms(function (realms) {
+            $scope.paramRealms = realms;
+            $scope.dataRealm = realms[0];
+            $scope.$apply();
+        });
+    }();
+
+    /*  react upon general content reset event [PP]  */
     $scope.$on("content-reset", function() {
     	$scope.dataRealm = $scope.paramRealms[0];
     	$scope.dataUsername = "";
