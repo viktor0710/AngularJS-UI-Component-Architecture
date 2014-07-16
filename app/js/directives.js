@@ -10,7 +10,7 @@ demoApp.directive('focusInput', function($timeout) {
                 scope.$eval(attrs.ngEnter);
             });
             $timeout(function() {
-                element.parent().parent().parent().parent().find('input')[1].focus();
+                element.parent().parent().parent().parent().find("input")[1].focus();
             });
             event.preventDefault();
         }
@@ -28,10 +28,7 @@ demoApp.directive('triggerLogin', function($timeout) {
                 scope.$eval(attrs.ngEnter);
             });
             $timeout(function() {
-                console.log(element);
-                var loginBtn = (element.parent().parent().parent().parent().find('input')[2]);
-                loginBtn.trigger('click');
-                console.log(loginBtn);
+                scope.loginRequested();
             });
             event.preventDefault(element.html());
         }
