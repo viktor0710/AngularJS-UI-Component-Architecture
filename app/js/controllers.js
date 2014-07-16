@@ -12,7 +12,6 @@ demoApp.controller("SimpleController", function ($scope, customerModel) {
 	};
 
 	$scope.selectCustomer = function(customer) {
-		console.log("click");
 		customerModel.setSelectedCustomer(customer);
 	};
 });
@@ -45,19 +44,15 @@ demoApp.controller("loginController", function($scope, title, businessLogic) {
 			$scope.paramRealms = realms;
 			$scope.dataRealm = realms[0];
 			$scope.$apply();
-			for (var i = 0; i < $scope.paramRealms.length; i++){
-				console.log($scope.paramRealms[i]);
-			};
 		});
 	}();
 
 	var determine_button_enabled = function () {
         $scope.stateLoginAllowed =     ($scope.stateUsername === "valid")
         							&& ($scope.statePassword === "valid");
-        console.log("statelogin: "+ $scope.stateLoginAllowed);
-    }
+    };
 
-	$scope.$watch("dataUsername", function (newUsername, oldUsername) {
+	$scope.$watch("dataUsername", function (newUsername) {
         if (newUsername === "") {
             $scope.stateUsername = "empty";
             $scope.stateUsernameHint = "please enter your username";
@@ -68,10 +63,10 @@ demoApp.controller("loginController", function($scope, title, businessLogic) {
         	$scope.stateUsername = "valid";
             $scope.stateUsernameHint = "";
         }
-        determine_button_enabled()
+        determine_button_enabled();
     });
 
-    $scope.$watch("dataPassword", function (newPassword, oldPassword) {
+    $scope.$watch("dataPassword", function (newPassword) {
     	if (newPassword === "") {
             $scope.statePassword = "empty";
             $scope.statePasswordHint = "please enter your password";
@@ -82,21 +77,18 @@ demoApp.controller("loginController", function($scope, title, businessLogic) {
             $scope.statePassword = "valid";
             $scope.statePasswordHint = "";
         }
-        determine_button_enabled()
+        determine_button_enabled();
         var hash = businessLogic.hashPassword(newPassword);
         $scope.stateHashcodeTxt = hash.txt;
         $scope.stateHashcodeCol = "c" + hash.col;
-        console.log($scope.stateHashcodeTxt);
-        console.log($scope.stateHashcodeCol);
-    })
+    });
    
     $scope.loginRequested = function () {
-    	console.log("click");
         $scope.$emit("login",[$scope.dataRealm, $scope.dataUsername, $scope.dataPassword]);
     };
 
     //subscribe on reset event
-    $scope.$on('content-reset', function() {
+    $scope.$on("content-reset", function() {
     	$scope.dataRealm = $scope.paramRealms[0];
     	$scope.dataUsername = "";
     	$scope.dataPassword = "";
@@ -108,13 +100,13 @@ demoApp.controller("panelController", function($scope) {
 	$scope.dataStatus = "";
 	$scope.paramClearafter = 5;    
 
-    $scope.$on('login', function (event, data) {
+    $scope.$on("login", function (event, data) {
     	var realm    = data[0];
     	var username = data[1];
     	var password = data[2];
-    	var msg = 'login with realm "' + realm +
-                        '", username "' + username +
-                        '" and password "' + password + '"'
+    	var msg = "login with realm " + realm    +
+                  ", username "       + username +
+                  " and password "    + password + "";
 
         $scope.dataStatus = msg;
     });
@@ -126,13 +118,12 @@ demoApp.controller("panelController", function($scope) {
             clearTimeout(self.timer);
         }
         self.timer = setTimeout(function () {
-        	console.log("change");
             $scope.dataStatus = "";
             $scope.$apply();
         }, $scope.paramClearafter * 1000);
-    })
+    });
 
     $scope.reset = function () {
     	$scope.$broadcast("content-reset");
-    }
+    };
 });
