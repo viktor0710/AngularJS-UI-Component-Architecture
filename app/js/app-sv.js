@@ -2,30 +2,6 @@
 
 /* Services */
 
-demoApp.service('customerModel', function () {
-	this.customers = [
-		{name:"John Smith", city:"Phoenix"}, 
-		{name:"John Doe",city:"New York"}, 
-		{name:"Jane Doe",city:"Boston"}
-	];
-	
-	this.selectedCustomer = null;
-
-	this.addCustomer = function (customer) {
-		this.customers.push(
-			{
-				name: customer.name, 
-				city: customer.city
-			}
-		);
-		console.log(this.customers.length);
-	};
-
-	this.setSelectedCustomer = function (customer) {
-		this.selectedCustomer = customer;
-	};
-});
-
 demoApp.service('businessLogic', function () {
 
 	this.loadRealms = function (callback) {
