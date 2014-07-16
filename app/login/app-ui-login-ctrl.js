@@ -56,7 +56,7 @@ demoApp.controller("loginController", function($scope, title, businessService) {
             $scope.statePasswordHint = "";
         }
         determine_button_enabled();
-        var hash = businessLogic.hashPassword(newPassword);
+        var hash = businessService.hashPassword(newPassword);
         $scope.stateHashcodeTxt = hash.txt;
         $scope.stateHashcodeCol = "c" + hash.col;
     });
@@ -66,7 +66,7 @@ demoApp.controller("loginController", function($scope, title, businessService) {
 
     /*  feed model with realms [PP]  */
     $scope.loadRealms = function () {
-        businessLogic.loadRealms(function (realms) {
+        businessService.loadRealms(function (realms) {
             $scope.paramRealms = realms;
             $scope.dataRealm = realms[0];
             $scope.$apply();
